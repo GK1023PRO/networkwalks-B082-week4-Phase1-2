@@ -1,128 +1,385 @@
-# networkwalks-B082-week4-Phase1-2
-NetworkWalks B082 Week 4 – Web Application Security, Burp Suite, Encryption, Vulnerability Assessment &amp; Penetration Testing (M1–M4)
 # PENETRATION TESTING REPORT
 
-## WEB APPLICATION SECURITY ASSESSMENT
+## WEB APPLICATION SECURITY, ENCRYPTED DOCUMENT RECOVERY & INFORMATION EXPOSURE ASSESSMENT
 
 ### W4-M4-FINAL \| CYBERSECURITY \| NETWORKWALKS
 
-  Field                 Details
-  --------------------- -------------------------------------------
-  **Pentester Name**    Georges Khoury
-  **Program / Batch**   B082 -- NetworkWalks
-  **Week**              04
-  **Milestone**         M4 -- Detailed Penetration Testing Report
-  **Target**            Mediroza General Hospital Web Application
-  **Environment**       Kali Linux
-  **M1 / M2 / M3**      Completed
-  **M4**                Final Reporting
+  -----------------------------------------------------------------------
+  Field                               Details
+  ----------------------------------- -----------------------------------
+  **Pentester Name**                  Georges Khoury
+
+  **Program / Batch**                 B082 -- NetworkWalks
+
+  **Week**                            04
+
+  **Milestone**                       W4-M4 -- Detailed Penetration
+                                      Testing Report
+
+  **Authorized Target**               Mediroza General Hospital training
+                                      web application
+
+  **Primary Environment**             Kali Linux
+
+  **M1**                              ✅ Completed -- Web Security
+                                      Testing / Patient Report
+                                      Acquisition
+
+  **M2**                              ✅ Completed -- Encrypted Patient
+                                      Report Password Recovery
+
+  **M3**                              ✅ Completed -- Information
+                                      Exposure Assessment
+
+  **M4**                              🟡 Final Report Prepared -- Pending
+                                      instructor submission / final
+                                      repository publication
+
+  **Purpose**                         Authorized educational
+                                      cybersecurity and
+                                      penetration-testing exercise
+  -----------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
 ## 1. Liability Disclaimer
 
-The activities documented in this report were performed only within the
-authorized NetworkWalks cybersecurity training scope. No destructive
-modification of the target was performed. Findings are reported as
-confirmed only when supported by collected evidence.
+The activities documented in this report were performed strictly within
+the authorized NetworkWalks cybersecurity training scope. Testing was
+conducted for educational and defensive-security purposes against the
+assigned training environment.
+
+No destructive modification of the target was performed. A finding is
+described as confirmed only when the collected evidence supports it.
+Setup screens, reconnaissance observations, or unverified hypotheses are
+not presented as successful exploitation.
 
 Sensitive information discovered during testing is summarized rather
-than reproduced. PII and confidential records must be redacted from any
-public GitHub version.
+than reproduced. Personally identifiable information (PII), confidential
+employee information, shareholder information, passwords, and other
+sensitive records must be redacted from any public GitHub version of
+this report.
+
+------------------------------------------------------------------------
 
 ## 2. Executive Summary
 
-Week 4 consisted of an authorized web-application security assessment of
-the Mediroza General Hospital training target. The assessment identified
-multiple information-exposure concerns.
+Week 4 continued the authorized Mediroza General Hospital security
+assessment and combined three practical security activities into a final
+penetration-testing report.
 
-The most significant confirmed issue was a publicly accessible
-historical SQL database backup exposed through `/old/`. The backup
-contained internal database structure and confidential staff/shareholder
-information.
+**W4-M1** focused on web application security testing and the controlled
+acquisition of the assigned patient-report resources. Burp Suite
+Community Edition was used as the principal web-security testing tool to
+observe and analyze HTTP requests, authentication behavior, application
+endpoints, and responses. Some foundational Mediroza
+authentication-testing work began previously under **W3-OPTIONAL2** in
+the `networkwalks-B082-week3-Phase1-2` repository. Week 4 therefore
+represents a continuation and expansion of that authorized assessment
+rather than an unrelated duplicate exercise.
 
-Directory indexing was also confirmed on `/patient/`, `/staff/`, and
-`/old/`. The patient directory disclosed resources including `reports/`,
-`download.php`, `error_log`, `login.php`, `logout.php`, and
-`portal.php`. The staff directory exposed the internal staff login
-resource.
+**W4-M2** focused on the encrypted patient reports obtained as part of
+the authorized lab. The NetworkWalks browser-based password-recovery
+workflow was used to process the protected PDF documents, extract their
+password-verification hashes, perform authorized password recovery, and
+manually verify recovered access against the original files.
 
-**Overall Risk Rating: HIGH**
+**W4-M3** focused on security exposure and impact analysis. The most
+significant confirmed issue was a publicly accessible historical SQL
+database backup exposed through the `/old/` directory. The backup
+disclosed internal database structure and confidential staff/shareholder
+information. Public directory indexing was also confirmed on
+`/patient/`, `/staff/`, and `/old/`, exposing application structure and
+sensitive resource names.
 
-The High overall rating is driven primarily by the exposed confidential
-database backup. Directory indexing and exposed internal resources
-substantially increase reconnaissance value and compound the
-information-disclosure risk.
+### Overall Risk Rating: **HIGH**
+
+The overall rating is driven primarily by the publicly accessible
+database backup containing confidential organizational information.
+Directory indexing and publicly exposed internal resources materially
+increase reconnaissance value and compound the information-disclosure
+risk.
+
+------------------------------------------------------------------------
 
 ## 3. Scope and Methodology
 
 ### 3.1 Authorized Scope
 
-Testing focused on the authorized Mediroza web application and
-web-accessible resources discovered during M1--M3, including public
-content, `robots.txt`, patient/staff resources, legacy directories,
-authentication interfaces, exposed files, and HTTP behavior.
+The assessment focused on the NetworkWalks-assigned Mediroza training
+environment and the resources encountered during W4-M1 through W4-M3.
 
-### 3.2 Tools Used
+The reviewed areas included:
 
-  -----------------------------------------------------------------------
-  Tool / Technique                    Purpose
-  ----------------------------------- -----------------------------------
-  **Kali Linux**                      Primary assessment environment
+-   Public web content and HTTP/HTTPS behavior
+-   Patient and staff authentication interfaces
+-   Patient report resources used in the assigned lab
+-   `robots.txt`
+-   `/patient/`
+-   `/staff/`
+-   `/old/`
+-   Publicly exposed files and legacy resources
+-   Encrypted patient-report documents
+-   Authentication request/response behavior
+-   Directory indexing
+-   Historical database-backup exposure
+-   Evidence integrity and professional reporting
 
-  **cURL**                            Retrieve HTTP responses, headers,
-                                      and pages
+Testing remained within the educational scope.
 
-  **grep**                            Search saved evidence for relevant
-                                      content
+### 3.2 Relationship to W3-OPTIONAL2
 
-  **sha256sum**                       Evidence-integrity verification
+The Mediroza web-security work did not begin from zero in Week 4.
 
-  **Web Browser**                     Manual validation and screenshots
+During **W3-OPTIONAL2**, the Mediroza Hospital web authentication
+interface had already been introduced as an authorized
+web-authentication security assessment. Week 4 reused that legitimate
+assessment context and extended it into a broader web-security,
+encrypted-document-recovery, information-exposure, and reporting
+workflow.
 
-  **Directory/resource review**       Identify exposed application
-                                      resources
-
-  **Authentication review**           Observe login interfaces and
-                                      failure behavior
-  -----------------------------------------------------------------------
-
-### 3.3 Methodology
+This distinction is important for the evidence record:
 
 ``` text
-Authorized Scope
-      ↓
-Reconnaissance
-      ↓
-Resource Discovery
-      ↓
-Directory / Endpoint Review
-      ↓
-Authentication Review
-      ↓
-Exposure Validation
-      ↓
-Evidence Collection
-      ↓
-Integrity Verification
-      ↓
-Risk Analysis
-      ↓
-Remediation
+W3-OPTIONAL2
+Mediroza Web Authentication Security Assessment
+        ↓
+Existing foundational authentication/security-testing work
+        ↓
+W4-M1
+Expanded Web Security Testing with Burp Suite
+        ↓
+W4-M2
+Encrypted Patient Report Password Recovery
+        ↓
+W4-M3
+Information Exposure / Impact Assessment
+        ↓
+W4-M4
+Final Penetration Testing Report
 ```
 
-### 3.4 Limitations
+Week 3 evidence remains part of the Week 3 repository. Week 4
+documentation should reference the continuity without duplicating or
+relabeling Week 3 screenshots as Week 4 evidence.
 
-Testing remained within the educational scope. Sensitive records were
-not modified. Public evidence must be redacted.
+### 3.3 Tools Used
 
-## 4. Findings and Proof of Exploitation
+  -----------------------------------------------------------------------
+  Tool / Technology                   Purpose
+  ----------------------------------- -----------------------------------
+  **Kali Linux**                      Primary penetration-testing
+                                      environment
 
-### 4.1 W4-01 --- Public Directory Indexing
+  **Burp Suite Community Edition**    Web proxy, HTTP request/response
+                                      analysis, Repeater/Intruder
+                                      preparation, authentication testing
 
-**Severity: Medium**
+  **Chromium / Web Browser**          Manual web validation and
+                                      screenshot evidence
 
-Directory indexing was confirmed on:
+  **cURL**                            Retrieve and inspect HTTP
+                                      responses, headers, pages, and
+                                      endpoints
+
+  **grep**                            Search saved
+                                      reconnaissance/evidence for
+                                      relevant content
+
+  **sha256sum**                       Verify evidence integrity
+
+  **NetworkWalks Hash Calculator**    Extract password-verification
+                                      information from authorized
+                                      password-protected PDF lab files
+
+  **NetworkWalks Password Cracking    Perform authorized
+  Lab / Tool**                        password-recovery testing against
+                                      extracted PDF hashes
+
+  **Manual PDF Verification**         Confirm that a recovered password
+                                      correctly opens the corresponding
+                                      protected document
+  -----------------------------------------------------------------------
+
+### 3.4 Assessment Methodology
+
+``` text
+Authorization & Scope
+        ↓
+Web Reconnaissance
+        ↓
+Burp Suite Proxy / HTTP Analysis
+        ↓
+Authentication & Endpoint Review
+        ↓
+Patient Report Acquisition
+        ↓
+Encrypted PDF Hash Extraction
+        ↓
+Authorized Password Recovery
+        ↓
+Manual Result Verification
+        ↓
+Directory / Legacy Resource Review
+        ↓
+Information-Exposure Validation
+        ↓
+Evidence Collection & SHA-256 Verification
+        ↓
+Risk Analysis
+        ↓
+Remediation Planning
+        ↓
+Professional Reporting
+```
+
+### 3.5 Limitations
+
+-   Testing was restricted to the authorized educational target and
+    supplied lab resources.
+-   No destructive modification was performed.
+-   Sensitive database records were not unnecessarily reproduced in this
+    public-facing report.
+-   The presence of a resource does not automatically prove that its
+    contents are sensitive.
+-   Burp Suite setup/configuration screenshots are treated as
+    methodology evidence, not proof of exploitation.
+-   A submitted test credential is not treated as a valid credential
+    unless successful authentication is independently confirmed.
+-   Cookie-security weaknesses are not claimed without suitable
+    `Set-Cookie` evidence.
+-   Potential username enumeration should only be reported as confirmed
+    when comparable requests demonstrate reliably different responses.
+
+------------------------------------------------------------------------
+
+# 4. Milestone Activities
+
+## 4.1 W4-M1 -- Web Security Testing & Patient Report Acquisition
+
+**Status: ✅ Completed**
+
+W4-M1 focused on web-security testing of the authorized Mediroza
+application. **Burp Suite Community Edition** was used as the primary
+web application security testing tool.
+
+The captured Week 4 evidence demonstrates the following workflow:
+
+1.  Burp Suite Community Edition was launched in Kali Linux.
+2.  A temporary Burp project was created.
+3.  Burp default configuration was selected.
+4.  The Burp Dashboard and Proxy tools were initialized.
+5.  The Mediroza Patient Portal login interface was opened in the
+    browser.
+6.  Proxy interception was enabled/disabled as required for traffic
+    analysis.
+7.  A patient-login POST request was captured in Burp HTTP history.
+8.  The request demonstrated application parameters for `username` and
+    `password`.
+9.  The captured request was transferred into Burp Repeater for
+    controlled request analysis.
+10. Burp Intruder was prepared for authorized testing; setup evidence
+    alone is not treated as proof that an automated attack succeeded.
+11. HTTP response information was reviewed for application/server
+    fingerprinting.
+12. Additional endpoint and directory review was performed as part of
+    the authorized assessment.
+
+Observed response/application metadata included information consistent
+with PHP, LiteSpeed, and the Mediroza CMS. Such metadata is treated
+primarily as reconnaissance/fingerprinting information unless paired
+with a demonstrated exploit.
+
+A browser response displaying **"Incorrect password"** was observed for
+a test login attempt. This confirms authentication failure behavior for
+that request; it does **not** establish that the submitted test
+credential was valid.
+
+### M1 Security Principle
+
+Web proxies such as Burp Suite allow security professionals to inspect
+the interaction between a browser and a web application. The objective
+is not merely to send requests, but to understand parameters,
+authentication flows, application responses, and potential weaknesses
+while remaining within the authorized scope.
+
+------------------------------------------------------------------------
+
+## 4.2 W4-M2 -- Encrypted Patient Report Password Recovery
+
+**Status: ✅ Completed**
+
+W4-M2 focused on the password protection applied to the assigned
+encrypted patient-report PDF documents.
+
+The NetworkWalks lab uses a two-stage browser-based workflow:
+
+``` text
+Password-Protected PDF
+        ↓
+NetworkWalks Hash Calculator
+        ↓
+Extracted PDF Password-Verification Hash
+        ↓
+NetworkWalks Password Cracking Tool / Lab
+        ↓
+Candidate-Password Testing
+        ↓
+Recovered Password
+        ↓
+Original Encrypted PDF
+        ↓
+Manual Verification
+```
+
+The purpose of the exercise was to demonstrate that document encryption
+can still be undermined when the protecting password is weak or
+predictable.
+
+The three assigned patient reports were processed only within the
+authorized educational exercise. Password-verification information was
+extracted from the encrypted PDFs and used for password-recovery
+testing. Recovered results were then manually verified against their
+corresponding protected documents.
+
+### Official NetworkWalks Resources
+
+-   NetworkWalks Project Task Lab -- Password Cracking with NetworkWalks
+    Tools
+-   NetworkWalks Hash Calculator
+
+The NetworkWalks lab documentation explains that the Hash Calculator is
+used to extract the hash from a locked PDF and that the Password Cracker
+is then used to recover the password from that extracted value.
+
+### M2 Security Principle
+
+Encryption strength and password strength are separate controls. A
+technically encrypted document can still be vulnerable to offline
+password recovery when protected by a weak, common, or predictable
+password.
+
+### Recommended Defensive Controls
+
+-   Use long, unique, randomly generated passwords.
+-   Avoid dictionary words and predictable password patterns.
+-   Use a password manager for high-entropy credentials.
+-   Protect sensitive reports using appropriate access controls in
+    addition to document passwords.
+-   Avoid distributing sensitive encrypted files and their passwords
+    through the same communication channel.
+-   Apply organizational data-classification and retention policies.
+
+------------------------------------------------------------------------
+
+## 4.3 W4-M3 -- Information Exposure & Impact Assessment
+
+**Status: ✅ Completed**
+
+W4-M3 expanded the assessment from authentication and encrypted-document
+security into broader information-exposure analysis.
+
+The assessment confirmed directory indexing on:
 
 ``` text
 /patient/
@@ -130,7 +387,7 @@ Directory indexing was confirmed on:
 /old/
 ```
 
-The patient listing exposed resource names including:
+The `/patient/` listing exposed resource names including:
 
 ``` text
 reports/
@@ -141,223 +398,465 @@ logout.php
 portal.php
 ```
 
-The staff listing exposed `login.php`, while `/old/` exposed a
-historical SQL backup.
+The `/staff/` listing exposed the staff authentication resource.
 
-**Impact:** Directory indexing accelerates reconnaissance, exposes
-internal application structure, and may reveal forgotten or sensitive
-resources.
+The `/old/` directory exposed a historical SQL database backup.
+Validation showed that the backup contained internal database structure
+and confidential staff/shareholder information.
 
-**Remediation:** Disable automatic directory listing, restrict sensitive
-directories, and remove obsolete files from the public web root.
+This represented the most significant confirmed security issue observed
+during Week 4.
 
 ------------------------------------------------------------------------
 
-### 4.2 W4-02 --- Public Historical Database Backup
+# 5. Findings and Proof of Impact
 
-**Severity: Critical**
+## 5.1 W4-01 -- Public Historical Database Backup
 
-A historical SQL database backup was publicly discoverable through
-`/old/`. Validation showed that the backup contained internal schema
-information and confidential staff/shareholder records.
+**Severity: CRITICAL**\
+**Status: Confirmed**
 
-The public report intentionally does not reproduce the exposed personal
+### Description
+
+A historical SQL database backup was publicly discoverable through the
+web-accessible `/old/` directory.
+
+The file identified itself as an internal Mediroza database backup and
+included a warning indicating that it contained confidential staff and
+shareholder records.
+
+The evidence also demonstrated database structures associated with staff
+and shareholder information.
+
+### Security Impact
+
+Unauthorized exposure of a database backup may result in:
+
+-   Disclosure of employee PII
+-   Disclosure of employment and financial information
+-   Disclosure of shareholder information
+-   Exposure of internal database schema
+-   Increased phishing and social-engineering risk
+-   Additional reconnaissance opportunities
+-   Privacy, regulatory, legal, and reputational consequences
+
+### Proof of Impact
+
+The issue was validated sufficiently to establish that confidential
+organizational information was publicly exposed. Further collection of
+real personal records was unnecessary.
+
+The public report intentionally does not reproduce names, national
+identifiers, phone numbers, salary information, or other sensitive
 records.
 
-**Potential Impact:** - Privacy breach - Targeted phishing/social
-engineering - Exposure of internal organizational information -
-Disclosure of database structure - Regulatory/reputational consequences
+### Remediation
 
-**Remediation:** Remove public backups immediately, store backups
-outside the document root, encrypt them, enforce access control, review
-access logs, and perform an incident/privacy review.
-
-------------------------------------------------------------------------
-
-### 4.3 W4-03 --- Public Application Error Log
-
-**Severity: High**
-
-The indexed `/patient/` directory exposed an `error_log` file.
-
-**Impact:** Public logs may disclose internal paths, implementation
-details, errors, debugging information, or other sensitive context.
-
-**Remediation:** Move logs outside the public document root, deny direct
-HTTP access, review the exposed log for sensitive data, and centralize
-protected logging.
+1.  Remove database backups from all publicly accessible web directories
+    immediately.
+2.  Store backups outside the web document root.
+3.  Encrypt backup data at rest.
+4.  Apply strict authentication and authorization to backup storage.
+5.  Review web-server access logs to determine whether the backup was
+    previously accessed.
+6.  Assess whether exposed information requires privacy/breach response
+    procedures.
+7.  Rotate any credentials or secrets if later review establishes that
+    they were included in the exposed data.
+8.  Add deployment controls that prevent database dumps and backup
+    artifacts from reaching production web roots.
 
 ------------------------------------------------------------------------
 
-### 4.4 W4-04 --- Internal Staff Authentication Interface Discoverable
+## 5.2 W4-02 -- Public Directory Indexing
 
-**Severity: Low**
+**Severity: MEDIUM**\
+**Status: Confirmed**
 
-An internal staff authentication page was discoverable and identified
-itself as:
+### Description
+
+Automatic directory listing was confirmed on multiple web-accessible
+directories:
 
 ``` text
-Staff Login
-Internal staff access only.
+/patient/
+/staff/
+/old/
 ```
 
-The form requested a Staff ID and password.
+Directory indexes revealed application structure and exposed resource
+names that would otherwise require additional reconnaissance.
 
-A public login interface is not automatically a vulnerability; the issue
-here is its reconnaissance value when combined with directory indexing
-and other exposed resources.
+### Security Impact
 
-**Remediation:** Disable directory indexing, minimize unnecessary
-technology disclosure, enforce MFA/rate limiting, and monitor
-authentication attempts.
+Directory indexing can:
+
+-   Reveal hidden or forgotten files
+-   Expose legacy resources
+-   Accelerate attacker reconnaissance
+-   Reveal authentication endpoints
+-   Expose report/download/log resources
+-   Lead directly to more serious issues when sensitive files are
+    present
+
+In this assessment, the risk was compounded because `/old/` exposed the
+historical SQL backup.
+
+### Remediation
+
+-   Disable automatic directory listing.
+-   Apply explicit access-control rules to sensitive directories.
+-   Remove obsolete resources from the public web root.
+-   Review public directories for backup, log, temporary, archive, and
+    development files.
+-   Use secure deployment pipelines to prevent unintended files from
+    being published.
 
 ------------------------------------------------------------------------
 
-### 4.5 W4-05 --- Application Structure Disclosure
+## 5.3 W4-03 -- Publicly Listed Application Error Log
 
-**Severity: Medium**
+**Severity: MEDIUM**\
+**Status: Confirmed Exposure / Contents Not Overclaimed**
 
-Unauthenticated reconnaissance revealed patient, staff, legacy, report,
-download, log, portal, and authentication-related resources.
+### Description
 
-**Impact:** The combined information provides a useful map of the
-application and reduces attacker reconnaissance effort.
+The `/patient/` directory index publicly listed an `error_log` resource.
 
-**Remediation:** Apply least privilege, remove legacy resources, protect
-logs/backups, and conduct regular external attack-surface reviews.
+The confirmed finding is that the log resource was publicly
+exposed/listed. This report does not assume that its contents contained
+sensitive information unless separately demonstrated by evidence.
 
-## 5. Risk Rating
+### Security Impact
 
-  -----------------------------------------------------------------------
-  ID                Finding           Severity          Status
-  ----------------- ----------------- ----------------- -----------------
-  W4-01             Public directory  **Medium**        Confirmed
-                    indexing                            
+If application logs are publicly retrievable, they may expose:
 
-  W4-02             Public database   **Critical**      Confirmed
-                    backup with                         
-                    confidential                        
-                    records                             
+-   Internal filesystem paths
+-   Stack traces
+-   Database errors
+-   Implementation details
+-   Debug information
+-   User/session information
+-   Other sensitive operational context
 
-  W4-03             Public            **High**          Confirmed
-                    application error                   exposure
-                    log                                 
+### Remediation
 
-  W4-04             Internal staff    **Low**           Confirmed
-                    login                               observation
-                    discoverable                        
+-   Store application logs outside the web document root.
+-   Explicitly deny direct HTTP access to log files.
+-   Review previously exposed logs for sensitive content.
+-   Centralize logging in a protected logging/SIEM platform.
+-   Ensure production applications do not expose verbose debugging
+    information.
 
-  W4-05             Application       **Medium**        Confirmed
-                    structure                           
-                    disclosure                          
-  -----------------------------------------------------------------------
+------------------------------------------------------------------------
 
-## 6. Recommendations and Remediation
+## 5.4 W4-04 -- Internal Staff Authentication Interface Discoverable
 
-1.  **Remove public database backups immediately.** Store backups
-    outside the web root and protect/encrypt them.
-2.  **Disable directory indexing.** For Apache, a defensive
-    configuration may include `Options -Indexes`.
-3.  **Protect application logs.** Logs should never be directly
-    downloadable from the public site.
-4.  **Review the exposed-data incident.** Determine what data was
-    exposed, how long it was accessible, and whether notification
-    obligations apply.
-5.  **Harden authentication.** Use MFA, rate limiting, strong password
-    policy, monitoring, and generic failure responses.
-6.  **Remove legacy content.** Delete obsolete `/old/` resources and
-    development artifacts from production.
-7.  **Add deployment controls.** Prevent `.sql`, `.bak`, `.log`, `.zip`,
-    `.tar`, `.gz`, `.old`, and temporary files from entering the public
+**Severity: LOW / INFORMATIONAL**\
+**Status: Confirmed Observation**
+
+### Description
+
+The staff authentication interface was discoverable through the exposed
+application structure and identified itself as an internal staff-access
+page.
+
+A publicly reachable login page is not automatically a vulnerability.
+The security concern is its reconnaissance value when combined with
+directory indexing and other exposed resources.
+
+### Remediation
+
+-   Disable directory indexing.
+-   Use generic authentication failure responses.
+-   Enforce MFA for staff accounts where appropriate.
+-   Implement rate limiting and monitoring.
+-   Apply account lockout or adaptive protection carefully to prevent
+    abuse.
+-   Minimize unnecessary application and technology disclosure.
+
+------------------------------------------------------------------------
+
+## 5.5 W4-05 -- Technology and Application Fingerprinting
+
+**Severity: INFORMATIONAL**\
+**Status: Confirmed Observation**
+
+### Description
+
+HTTP analysis with Burp Suite exposed application/server metadata useful
+for fingerprinting, including PHP/LiteSpeed-related information and
+Mediroza CMS generator metadata.
+
+### Security Impact
+
+Technology disclosure does not by itself establish exploitation.
+However, version and framework information can help an attacker focus
+reconnaissance on known weaknesses.
+
+### Remediation
+
+-   Remove unnecessary generator/version metadata where practical.
+-   Avoid exposing detailed implementation information.
+-   Keep server-side frameworks, runtimes, CMS components, and
+    dependencies patched.
+-   Treat fingerprint reduction as defense-in-depth rather than a
+    substitute for patching.
+
+------------------------------------------------------------------------
+
+# 6. Risk Rating Summary
+
+  --------------------------------------------------------------------------------
+  ID               Finding                               Severity Status
+  ---------------- ------------------------ --------------------- ----------------
+  **W4-01**        Public historical                 **Critical** Confirmed
+                   database backup                                
+                   containing confidential                        
+                   organizational                                 
+                   information                                    
+
+  **W4-02**        Public directory                    **Medium** Confirmed
+                   indexing                                       
+
+  **W4-03**        Publicly listed                     **Medium** Confirmed
+                   application error log                          exposure
+
+  **W4-04**        Internal staff                         **Low / Confirmed
+                   authentication interface       Informational** observation
+                   discoverable                                   
+
+  **W4-05**        Technology/application       **Informational** Confirmed
+                   fingerprinting                                 observation
+  --------------------------------------------------------------------------------
+
+### Overall Assessment: **HIGH RISK**
+
+Although the highest individual finding is rated Critical, the overall
+engagement is rated High because the assessment was limited in scope and
+the report avoids assuming broader compromise beyond the evidence
+collected.
+
+------------------------------------------------------------------------
+
+# 7. Recommendations and Remediation Plan
+
+## Immediate Priority
+
+1.  **Remove the exposed SQL backup.**
+2.  **Disable directory indexing.**
+3.  **Review whether the exposed database was accessed by unauthorized
+    parties.**
+4.  **Protect or remove publicly accessible logs and legacy resources.**
+5.  **Review all web-accessible directories for additional backups or
+    confidential files.**
+
+## Short-Term Hardening
+
+6.  Harden staff and patient authentication with MFA where appropriate,
+    rate limiting, monitoring, and generic failure messages.
+7.  Remove obsolete `/old/` content from production.
+8.  Review `/patient/reports/` and download functionality for proper
+    authorization enforcement.
+9.  Ensure session cookies use appropriate security attributes based on
+    the application's deployment requirements.
+10. Minimize unnecessary server/application fingerprinting information.
+
+## Long-Term Controls
+
+11. Add CI/CD deployment rules blocking sensitive extensions such as:
+
+``` text
+.sql
+.bak
+.backup
+.log
+.old
+.zip
+.tar
+.gz
+.tmp
+```
+
+12. Store backups in dedicated protected storage rather than the public
     web root.
-8.  **Perform recurring external reviews.** Check for directory listing,
-    backups, logs, debug files, and access-control mistakes.
+13. Implement recurring external attack-surface reviews.
+14. Perform secure-code and access-control reviews.
+15. Establish centralized protected logging and alerting.
+16. Maintain data-classification, retention, and incident-response
+    procedures.
 
-## 7. Conclusion
+------------------------------------------------------------------------
 
-Week 4 demonstrated the complete penetration-testing workflow from
-reconnaissance through validation and professional reporting.
+# 8. Evidence and Screenshot Organization
 
-The most serious confirmed issue was the publicly accessible historical
-SQL backup containing confidential organizational information.
-Additional findings included directory indexing, exposure of an
-application error log, discoverable internal application resources, and
-an exposed staff authentication interface.
-
-The assessment reinforced that individually small information
-disclosures can become substantially more valuable when combined. All
-findings were documented within the authorized educational scope.
-
-## 8. Evidence Collected
-
-### 8.1 W4-M1
-
-Store chronological screenshots under:
+The final repository should preserve Week 4 evidence separately from
+Week 3.
 
 ``` text
-screenshots/W4-M1/
+networkwalks-B082-week4/
+├── README.md
+├── evidence/
+│   └── redacted-or-nonsensitive-evidence-only/
+└── screenshots/
+    ├── W4-M1/
+    ├── W4-M2/
+    ├── W4-M3/
+    └── W4-M4/
 ```
 
-M1 evidence includes scope verification, HTTP reconnaissance,
-`robots.txt`, patient/staff/old directory discovery, exposed resource
-names, SQL backup discovery, and SHA-256 evidence-integrity
-verification.
+## 8.1 W4-M1 Evidence
 
-### 8.2 W4-M2
+The M1 evidence set documents the Burp Suite web-security workflow,
+including:
 
-``` text
-screenshots/W4-M2/
-```
+-   Burp Suite startup
+-   Temporary-project configuration
+-   Default configuration
+-   Burp Dashboard
+-   Proxy configuration
+-   Patient Portal login page
+-   Authentication failure response
+-   Intercept configuration
+-   HTTP history
+-   Captured login POST request
+-   Request parameters
+-   Repeater preparation
+-   Intruder preparation
+-   HTTP response/application fingerprinting
+-   Additional authorized web-security observations
 
-Insert the validated M2 screenshots in chronological order. Only
-demonstrated findings should be marked confirmed.
+**Important:** Burp configuration screens demonstrate methodology. They
+are not described as successful exploitation unless later evidence
+proves a specific result.
 
-### 8.3 W4-M3
+## 8.2 W4-M2 Evidence
 
-``` text
-screenshots/W4-M3/
-```
+M2 evidence documents:
 
-Insert the validated M3 screenshots in chronological order. Only
-demonstrated findings should be marked confirmed.
+-   Assigned encrypted patient-report PDFs
+-   NetworkWalks Hash Calculator workflow
+-   Extracted PDF password-verification hashes
+-   NetworkWalks password-recovery workflow
+-   Recovered results
+-   Manual verification against the corresponding protected documents
 
-### 8.4 W4-M4
+Passwords and sensitive patient information should not be exposed
+unnecessarily in the public repository.
 
-M4 contains the final report: Executive Summary, Scope & Methodology,
-Findings & Proof, Risk Rating, and Recommendations & Remediation.
+## 8.3 W4-M3 Evidence
 
-## 9. Evidence Handling and Privacy
+M3 evidence documents:
 
-For a public repository:
+-   `/patient/` directory indexing
+-   `/staff/` directory indexing
+-   `/old/` directory indexing
+-   Public historical SQL backup discovery
+-   Redacted proof that confidential staff/shareholder information was
+    present
+-   Other validated exposure observations
+-   Evidence-integrity verification where collected
 
--   Redact national IDs, telephone numbers, salary information, and
-    unnecessary personal data.
--   Do not upload the exposed SQL backup.
+## 8.4 W4-M4 Evidence
+
+M4 is the professional reporting milestone and includes:
+
+1.  Executive Summary
+2.  Scope and Methodology
+3.  Findings and Proof of Impact
+4.  Risk Ratings
+5.  Recommendations and Remediation
+6.  Conclusion
+7.  Evidence organization
+8.  Privacy/redaction requirements
+
+------------------------------------------------------------------------
+
+# 9. Evidence Integrity and Privacy
+
+Collected evidence files were verified using SHA-256 where applicable.
+The evidence-verification workflow returned `OK` for the recorded
+evidence set.
+
+For the public GitHub repository:
+
+-   Do not upload the exposed SQL database backup.
 -   Do not publish raw confidential database contents.
--   Preserve unredacted evidence only in an approved private submission
-    location if required.
+-   Redact national IDs.
+-   Redact phone numbers.
+-   Redact salary information.
+-   Redact patient information.
+-   Redact unnecessary staff/shareholder PII.
+-   Do not expose recovered passwords unnecessarily.
+-   Preserve any required unredacted evidence only in an
+    instructor-approved private submission location.
 
-## 10. Problems Encountered & Solutions
+------------------------------------------------------------------------
 
-### Evidence Integrity
+# 10. Problems Encountered and Solutions
 
-Collected evidence was hashed with SHA-256 and the recorded evidence
-files returned `OK` during verification.
+## 10.1 Continuity Between Week 3 and Week 4
 
-### Sensitive Evidence
+**Problem:** Part of the Mediroza authentication assessment originated
+in W3-OPTIONAL2, creating a risk that Week 3 evidence could be
+incorrectly presented as new Week 4 evidence.
 
-Because the exposed backup contains confidential information, the
-appropriate reporting approach is to preserve the original privately and
-publish only redacted evidence.
+**Solution:** The Week 4 report explicitly documents the relationship to
+W3-OPTIONAL2 while keeping Week 3 screenshots in the Week 3 repository.
+Week 4 contains only its own evidence and references the earlier work as
+background.
 
-## 11. Skills Practiced
+## 10.2 Distinguishing Setup from Confirmed Findings
+
+**Problem:** Burp Suite screenshots include proxy, Repeater, and
+Intruder setup screens.
+
+**Solution:** Configuration/setup evidence is documented as methodology
+only. No automated attack or successful credential compromise is claimed
+unless supported by a demonstrated result.
+
+## 10.3 Sensitive Database Evidence
+
+**Problem:** The exposed SQL backup contained confidential information.
+
+**Solution:** Testing stopped after sufficient proof of exposure was
+obtained. The report summarizes the categories of exposed information
+without reproducing unnecessary personal records.
+
+## 10.4 Evidence Integrity
+
+**Problem:** Security evidence must remain trustworthy and traceable.
+
+**Solution:** SHA-256 hashes were used for collected evidence files
+where applicable, and integrity verification returned successful
+results.
+
+## 10.5 Encrypted Document Validation
+
+**Problem:** An automated password-recovery result alone should not be
+treated as final proof.
+
+**Solution:** Recovered passwords were manually verified against their
+corresponding authorized protected documents.
+
+------------------------------------------------------------------------
+
+# 11. Skills Practiced
 
 -   Web Application Penetration Testing
+-   Burp Suite Community Edition
+-   HTTP Request/Response Analysis
+-   Proxy Interception
+-   Burp Repeater
+-   Burp Intruder Preparation
+-   Authentication Security Review
 -   Reconnaissance
 -   Directory Indexing Assessment
 -   Information Disclosure Analysis
--   Authentication Security Review
--   HTTP Analysis
+-   Encrypted Document Security
+-   Password Hash Extraction
+-   Authorized Password Recovery
+-   Manual Result Validation
 -   Kali Linux
 -   cURL
 -   grep
@@ -366,39 +865,78 @@ publish only redacted evidence.
 -   Vulnerability Reporting
 -   Remediation Planning
 -   Data Privacy
--   Security Documentation
-
-## Recommended Repository Structure
-
-``` text
-networkwalks-B082-week4/
-├── README.md
-├── evidence/
-│   └── redacted-or-nonsensitive-evidence-only
-└── screenshots/
-    ├── W4-M1/
-    ├── W4-M2/
-    ├── W4-M3/
-    └── W4-M4/
-```
-
-## Report Prepared By
-
-**Georges Khoury**\
-Cybersecurity & Ethical Hacking Intern\
-**Batch:** B082 -- NetworkWalks
-
-## Project Information
-
--   **Program:** Cybersecurity Program at NetworkWalks
--   **Week:** 04
--   **M1:** Completed
--   **M2:** Completed
--   **M3:** Completed
--   **M4:** Detailed Penetration Testing Report
--   **Environment:** Kali Linux
--   **Repository:** GitHub
+-   Evidence Handling
+-   Professional Penetration Testing Documentation
 
 ------------------------------------------------------------------------
 
-**-End-**
+# 12. Conclusion
+
+Week 4 demonstrated an end-to-end penetration-testing workflow combining
+web application assessment, encrypted-document security,
+information-exposure analysis, evidence validation, risk assessment, and
+professional reporting.
+
+W4-M1 extended the Mediroza web-authentication work begun during
+W3-OPTIONAL2 and used Burp Suite Community Edition to inspect and
+analyze the authorized web application.
+
+W4-M2 demonstrated the security implications of weak document passwords
+through the authorized NetworkWalks Hash Calculator and
+password-recovery workflow. The exercise reinforced that encryption does
+not compensate for weak password selection.
+
+W4-M3 identified the most serious issue of the week: a publicly
+accessible historical SQL database backup containing confidential
+organizational information. Directory indexing and other exposed
+resources increased reconnaissance value and contributed to the overall
+security risk.
+
+W4-M4 consolidated these activities into a professional
+penetration-testing report with clear findings, evidence boundaries,
+risk ratings, and actionable remediation.
+
+The assessment reinforced several core security principles:
+
+-   Sensitive backups must never be stored in public web directories.
+-   Directory indexing should be disabled unless intentionally required.
+-   Logs and legacy files must be protected from direct public access.
+-   Strong passwords are essential even when files are encrypted.
+-   Authentication systems should minimize information disclosure and
+    resist automated abuse.
+-   Automated tool output must be manually validated.
+-   Evidence should be collected carefully, preserved with integrity,
+    and reported without unnecessarily exposing sensitive information.
+-   Penetration testing must always remain within explicit
+    authorization.
+
+------------------------------------------------------------------------
+
+# Report Prepared By
+
+**Georges Khoury**\
+Cybersecurity & Ethical Hacking Intern\
+**Batch:** B082 -- NetworkWalks\
+**Week:** 04\
+**Report:** W4-M4-FINAL
+
+------------------------------------------------------------------------
+
+## Project Status
+
+  -----------------------------------------------------------------------
+  Milestone                           Status
+  ----------------------------------- -----------------------------------
+  **W4-M1**                           ✅ Completed
+
+  **W4-M2**                           ✅ Completed
+
+  **W4-M3**                           ✅ Completed
+
+  **W4-M4**                           🟡 Final report prepared; pending
+                                      final submission/publication
+  -----------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+**End of Report**
