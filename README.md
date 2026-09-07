@@ -31,9 +31,7 @@
   **M3**                              ✅ Completed -- Information
                                       Exposure Assessment
 
-  **M4**                              🟡 Final Report Prepared -- Pending
-                                      instructor submission / final
-                                      repository publication
+  **M4**                              ✅ Completed — Final Penetration Testing Report
 
   **Purpose**                         Authorized educational
                                       cybersecurity and
@@ -1141,8 +1139,7 @@ Cybersecurity & Ethical Hacking Intern\
 
   **W4-M3**                           ✅ Completed
 
-  **W4-M4**                           🟡 Final report prepared; pending
-                                      final submission/publication
+  **W4-M4**                           ✅ Completed
   -----------------------------------------------------------------------
 
 ------------------------------------------------------------------------
