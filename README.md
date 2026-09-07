@@ -690,87 +690,295 @@ collected.
 
 # 8. Evidence and Screenshot Organization
 
-The final repository should preserve Week 4 evidence separately from
-Week 3.
+W4-M4 is the **final reporting milestone**. It does not require a separate technical-testing screenshot folder. This report consolidates the evidence collected during **W4-M1, W4-M2, and W4-M3**.
 
-``` text
-networkwalks-B082-week4/
-├── README.md
-├── evidence/
-│   └── redacted-or-nonsensitive-evidence-only/
-└── screenshots/
-    ├── W4-M1/
-    ├── W4-M2/
-    ├── W4-M3/
-    └── W4-M4/
+The repository contains **55 Week 4 screenshots**:
+
+| Milestone | Screenshot Count | Status |
+|---|---:|---|
+| **W4-M1** | **22** | ✅ Completed |
+| **W4-M2** | **23** | ✅ Completed |
+| **W4-M3** | **10** | ✅ Completed |
+| **Total** | **55** | ✅ Integrated into M4 |
+
+The exact GitHub structure is:
+
+```text
+screenshots/
+├── W4-M1/
+│   ├── 1.png
+│   ├── 2.png
+│   ├── ...
+│   └── 22.png
+├── W4-M2/
+│   ├── 1.png
+│   ├── 2.png
+│   ├── ...
+│   └── 23.png
+└── W4-M3/
+    ├── 1.png
+    ├── 2.png
+    ├── ...
+    └── 10.png
 ```
 
-## 8.1 W4-M1 Evidence
+> **Evidence rule:** Screenshot captions below intentionally use neutral numbering rather than inventing a result for an image that has not been individually described in the report. The surrounding milestone sections explain what each evidence set supports.
 
-The M1 evidence set documents the Burp Suite web-security workflow,
-including:
+## 8.1 W4-M1 — Web Security Testing Evidence
 
--   Burp Suite startup
--   Temporary-project configuration
--   Default configuration
--   Burp Dashboard
--   Proxy configuration
--   Patient Portal login page
--   Authentication failure response
--   Intercept configuration
--   HTTP history
--   Captured login POST request
--   Request parameters
--   Repeater preparation
--   Intruder preparation
--   HTTP response/application fingerprinting
--   Additional authorized web-security observations
+These 22 screenshots form the W4-M1 evidence set. They document the authorized Mediroza web-security workflow, including Burp Suite configuration and use, browser-based application testing, HTTP request/response inspection, authentication testing, and related M1 activity. Configuration screens are treated as methodology evidence and are not presented as successful exploitation unless the corresponding evidence demonstrates a result.
 
-**Important:** Burp configuration screens demonstrate methodology. They
-are not described as successful exploitation unless later evidence
-proves a specific result.
+### W4-M1 Screenshot 1
 
-## 8.2 W4-M2 Evidence
+![W4-M1 Screenshot 1](screenshots/W4-M1/1.png)
 
-M2 evidence documents:
+### W4-M1 Screenshot 2
 
--   Assigned encrypted patient-report PDFs
--   NetworkWalks Hash Calculator workflow
--   Extracted PDF password-verification hashes
--   NetworkWalks password-recovery workflow
--   Recovered results
--   Manual verification against the corresponding protected documents
+![W4-M1 Screenshot 2](screenshots/W4-M1/2.png)
 
-Passwords and sensitive patient information should not be exposed
-unnecessarily in the public repository.
+### W4-M1 Screenshot 3
 
-## 8.3 W4-M3 Evidence
+![W4-M1 Screenshot 3](screenshots/W4-M1/3.png)
 
-M3 evidence documents:
+### W4-M1 Screenshot 4
 
--   `/patient/` directory indexing
--   `/staff/` directory indexing
--   `/old/` directory indexing
--   Public historical SQL backup discovery
--   Redacted proof that confidential staff/shareholder information was
-    present
--   Other validated exposure observations
--   Evidence-integrity verification where collected
+![W4-M1 Screenshot 4](screenshots/W4-M1/4.png)
 
-## 8.4 W4-M4 Evidence
+### W4-M1 Screenshot 5
 
-M4 is the professional reporting milestone and includes:
+![W4-M1 Screenshot 5](screenshots/W4-M1/5.png)
 
-1.  Executive Summary
-2.  Scope and Methodology
-3.  Findings and Proof of Impact
-4.  Risk Ratings
-5.  Recommendations and Remediation
-6.  Conclusion
-7.  Evidence organization
-8.  Privacy/redaction requirements
+### W4-M1 Screenshot 6
 
-------------------------------------------------------------------------
+![W4-M1 Screenshot 6](screenshots/W4-M1/6.png)
+
+### W4-M1 Screenshot 7
+
+![W4-M1 Screenshot 7](screenshots/W4-M1/7.png)
+
+### W4-M1 Screenshot 8
+
+![W4-M1 Screenshot 8](screenshots/W4-M1/8.png)
+
+### W4-M1 Screenshot 9
+
+![W4-M1 Screenshot 9](screenshots/W4-M1/9.png)
+
+### W4-M1 Screenshot 10
+
+![W4-M1 Screenshot 10](screenshots/W4-M1/10.png)
+
+### W4-M1 Screenshot 11
+
+![W4-M1 Screenshot 11](screenshots/W4-M1/11.png)
+
+### W4-M1 Screenshot 12
+
+![W4-M1 Screenshot 12](screenshots/W4-M1/12.png)
+
+### W4-M1 Screenshot 13
+
+![W4-M1 Screenshot 13](screenshots/W4-M1/13.png)
+
+### W4-M1 Screenshot 14
+
+![W4-M1 Screenshot 14](screenshots/W4-M1/14.png)
+
+### W4-M1 Screenshot 15
+
+![W4-M1 Screenshot 15](screenshots/W4-M1/15.png)
+
+### W4-M1 Screenshot 16
+
+![W4-M1 Screenshot 16](screenshots/W4-M1/16.png)
+
+### W4-M1 Screenshot 17
+
+![W4-M1 Screenshot 17](screenshots/W4-M1/17.png)
+
+### W4-M1 Screenshot 18
+
+![W4-M1 Screenshot 18](screenshots/W4-M1/18.png)
+
+### W4-M1 Screenshot 19
+
+![W4-M1 Screenshot 19](screenshots/W4-M1/19.png)
+
+### W4-M1 Screenshot 20
+
+![W4-M1 Screenshot 20](screenshots/W4-M1/20.png)
+
+### W4-M1 Screenshot 21
+
+![W4-M1 Screenshot 21](screenshots/W4-M1/21.png)
+
+### W4-M1 Screenshot 22
+
+![W4-M1 Screenshot 22](screenshots/W4-M1/22.png)
+
+
+## 8.2 W4-M2 — Encrypted Patient Report / Password Security Evidence
+
+These 23 screenshots form the W4-M2 evidence set. They document the authorized encrypted-document/password-security workflow and NetworkWalks tooling used during M2. Sensitive recovered passwords or patient information should be redacted where necessary in the public repository.
+
+### W4-M2 Screenshot 1
+
+![W4-M2 Screenshot 1](screenshots/W4-M2/1.png)
+
+### W4-M2 Screenshot 2
+
+![W4-M2 Screenshot 2](screenshots/W4-M2/2.png)
+
+### W4-M2 Screenshot 3
+
+![W4-M2 Screenshot 3](screenshots/W4-M2/3.png)
+
+### W4-M2 Screenshot 4
+
+![W4-M2 Screenshot 4](screenshots/W4-M2/4.png)
+
+### W4-M2 Screenshot 5
+
+![W4-M2 Screenshot 5](screenshots/W4-M2/5.png)
+
+### W4-M2 Screenshot 6
+
+![W4-M2 Screenshot 6](screenshots/W4-M2/6.png)
+
+### W4-M2 Screenshot 7
+
+![W4-M2 Screenshot 7](screenshots/W4-M2/7.png)
+
+### W4-M2 Screenshot 8
+
+![W4-M2 Screenshot 8](screenshots/W4-M2/8.png)
+
+### W4-M2 Screenshot 9
+
+![W4-M2 Screenshot 9](screenshots/W4-M2/9.png)
+
+### W4-M2 Screenshot 10
+
+![W4-M2 Screenshot 10](screenshots/W4-M2/10.png)
+
+### W4-M2 Screenshot 11
+
+![W4-M2 Screenshot 11](screenshots/W4-M2/11.png)
+
+### W4-M2 Screenshot 12
+
+![W4-M2 Screenshot 12](screenshots/W4-M2/12.png)
+
+### W4-M2 Screenshot 13
+
+![W4-M2 Screenshot 13](screenshots/W4-M2/13.png)
+
+### W4-M2 Screenshot 14
+
+![W4-M2 Screenshot 14](screenshots/W4-M2/14.png)
+
+### W4-M2 Screenshot 15
+
+![W4-M2 Screenshot 15](screenshots/W4-M2/15.png)
+
+### W4-M2 Screenshot 16
+
+![W4-M2 Screenshot 16](screenshots/W4-M2/16.png)
+
+### W4-M2 Screenshot 17
+
+![W4-M2 Screenshot 17](screenshots/W4-M2/17.png)
+
+### W4-M2 Screenshot 18
+
+![W4-M2 Screenshot 18](screenshots/W4-M2/18.png)
+
+### W4-M2 Screenshot 19
+
+![W4-M2 Screenshot 19](screenshots/W4-M2/19.png)
+
+### W4-M2 Screenshot 20
+
+![W4-M2 Screenshot 20](screenshots/W4-M2/20.png)
+
+### W4-M2 Screenshot 21
+
+![W4-M2 Screenshot 21](screenshots/W4-M2/21.png)
+
+### W4-M2 Screenshot 22
+
+![W4-M2 Screenshot 22](screenshots/W4-M2/22.png)
+
+### W4-M2 Screenshot 23
+
+![W4-M2 Screenshot 23](screenshots/W4-M2/23.png)
+
+
+## 8.3 W4-M3 — Information Exposure & Findings Evidence
+
+These 10 screenshots form the W4-M3 evidence set. They support the information-exposure assessment and validated findings discussed in this report. Screenshots containing staff, shareholder, patient, financial, national-ID, phone-number, or other sensitive information must be redacted before public publication.
+
+### W4-M3 Screenshot 1
+
+![W4-M3 Screenshot 1](screenshots/W4-M3/1.png)
+
+### W4-M3 Screenshot 2
+
+![W4-M3 Screenshot 2](screenshots/W4-M3/2.png)
+
+### W4-M3 Screenshot 3
+
+![W4-M3 Screenshot 3](screenshots/W4-M3/3.png)
+
+### W4-M3 Screenshot 4
+
+![W4-M3 Screenshot 4](screenshots/W4-M3/4.png)
+
+### W4-M3 Screenshot 5
+
+![W4-M3 Screenshot 5](screenshots/W4-M3/5.png)
+
+### W4-M3 Screenshot 6
+
+![W4-M3 Screenshot 6](screenshots/W4-M3/6.png)
+
+### W4-M3 Screenshot 7
+
+![W4-M3 Screenshot 7](screenshots/W4-M3/7.png)
+
+### W4-M3 Screenshot 8
+
+![W4-M3 Screenshot 8](screenshots/W4-M3/8.png)
+
+### W4-M3 Screenshot 9
+
+![W4-M3 Screenshot 9](screenshots/W4-M3/9.png)
+
+### W4-M3 Screenshot 10
+
+![W4-M3 Screenshot 10](screenshots/W4-M3/10.png)
+
+
+## 8.4 W4-M4 — Final Penetration Testing Report
+
+W4-M4 is represented by this `README.md`.
+
+It consolidates the **55 screenshots from M1–M3** together with:
+
+1. Executive Summary
+2. Scope and Methodology
+3. Findings and Proof of Impact
+4. Risk Ratings
+5. Recommendations and Remediation
+6. Evidence Organization
+7. Evidence Integrity and Privacy
+8. Problems Encountered and Solutions
+9. Skills Practiced
+10. Conclusion
+
+**No `screenshots/W4-M4/` directory is required.**
+
+---
 
 # 9. Evidence Integrity and Privacy
 
